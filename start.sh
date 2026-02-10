@@ -12,3 +12,9 @@ mkswap /swapfile
 echo 10 > /proc/sys/vm/swappiness
 swapon /swapfile
 echo 1 > /proc/sys/vm/overcommit_memory
+
+# Run database migrations
+./node_modules/.bin/prisma migrate deploy
+
+# Start the app
+npm start

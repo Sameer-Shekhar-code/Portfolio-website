@@ -56,7 +56,7 @@ ENV DATABASE_URL="file:$DATABASE_PATH"
 ENV CACHE_DATABASE_FILENAME="cache.db"
 ENV CACHE_DATABASE_PATH="/$LITEFS_DIR/$CACHE_DATABASE_FILENAME"
 ENV INTERNAL_PORT="8080"
-ENV PORT="8081"
+ENV PORT="8080"
 ENV NODE_ENV="production"
 
 # Make SQLite CLI accessible
@@ -67,6 +67,7 @@ RUN mkdir /myapp/
 WORKDIR /myapp/
 
 COPY --from=production-deps /myapp/node_modules /myapp/node_modules
+COPY --from=build /myapp/node_modules/prisma /myapp/node_modules/prisma
 COPY --from=build /myapp/node_modules/.prisma /myapp/node_modules/.prisma
 COPY --from=build /myapp/build /myapp/build
 COPY --from=build /myapp/public /myapp/public
