@@ -90,7 +90,7 @@ function useOnRead({
 	time,
 	onRead,
 }: {
-	parentElRef: React.RefObject<HTMLElement>
+	parentElRef: React.RefObject<HTMLDivElement | null>
 	time: number | undefined
 	onRead: () => void
 }) {

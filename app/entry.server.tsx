@@ -3,10 +3,16 @@ import { NonceProvider } from './utils/nonce-provider.ts'
 import { makeTimings } from './utils/timing.server.ts'
 
 import { createReadableStreamFromReadable } from '@react-router/node'
+import chalk from 'chalk'
 import { isbot } from 'isbot'
 import { getInstanceInfo } from 'litefs-js'
 import { renderToPipeableStream } from 'react-dom/server'
-import { type HandleDocumentRequestFunction, ServerRouter } from 'react-router'
+import {
+	type ActionFunctionArgs,
+	type HandleDocumentRequestFunction,
+	type LoaderFunctionArgs,
+	ServerRouter,
+} from 'react-router'
 import { PassThrough } from 'stream'
 
 // Reject/cancel all pending promises after 5 seconds
@@ -87,4 +93,21 @@ export async function handleDataRequest(response: Response) {
 	response.headers.set('fly-instance', currentInstance)
 
 	return response
+}
+
+export function handleError(
+	error: unknown,
+	{ request }: LoaderFunctionArgs | ActionFunctionArgs,
+): void {
+	// Skip capturing if the request is aborted as Remix docs suggest
+	// Ref: https://remix.run/docs/en/main/file-conventions/entry.server#handleerror
+	if (request.signal.aborted) {
+		return
+	}
+
+	if (error instanceof Error) {
+		console.error(chalk.red(String(error.stack)))
+	} else {
+		console.error(error)
+	}
 }

@@ -121,7 +121,7 @@ async function getRequestHandler(): Promise<RequestHandler> {
 	})
 }
 
-app.all('*', await getRequestHandler())
+app.all(/.*/, await getRequestHandler())
 
 const port = process.env.PORT || 3000
 

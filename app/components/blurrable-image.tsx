@@ -9,8 +9,7 @@ function BlurrableImage({
 	blurDataUrl,
 	...rest
 }: {
-	img: JSX.Element &
-		React.ReactElement<React.ImgHTMLAttributes<HTMLImageElement>>
+	img: React.ReactElement<React.ComponentProps<'img'>>
 	blurDataUrl?: string
 } & React.HTMLAttributes<HTMLDivElement>) {
 	const id = React.useId()
@@ -60,9 +59,9 @@ function BlurrableImage({
 		// this funny data-evt-prefixed attribute which our server renderer will
 		// remove for us (check entry.server).
 		suppressHydrationWarning: true,
-		'data-evt-onload': isServer
-			? "this.classList.remove('opacity-0')"
-			: undefined,
+		...(isServer
+			? { 'data-evt-onload': "this.classList.remove('opacity-0')" }
+			: {}),
 		className: clsxm(img.props.className, 'transition-opacity', {
 			'opacity-0': !visible,
 		}),

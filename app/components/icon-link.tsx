@@ -1,9 +1,4 @@
-import * as React from 'react'
-
-const IconLink = React.forwardRef<
-	HTMLAnchorElement,
-	JSX.IntrinsicElements['a']
->(function IconLink(props, ref) {
+function IconLink({ ref, ...props }: React.ComponentPropsWithRef<'a'>) {
 	return (
 		<a
 			{...props}
@@ -13,6 +8,6 @@ const IconLink = React.forwardRef<
 			{props.children}
 		</a>
 	)
-})
+}
 
 export { IconLink }

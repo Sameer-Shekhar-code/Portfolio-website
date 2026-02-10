@@ -6,7 +6,7 @@ function CloudinaryImg({
 	transparentBackground,
 }: {
 	cloudinaryId: string
-	imgProps: JSX.IntrinsicElements['img']
+	imgProps: React.ComponentPropsWithoutRef<'img'>
 	transparentBackground?: boolean
 }) {
 	return (
