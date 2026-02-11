@@ -1,51 +1,38 @@
-# base node image
-FROM node:20-bookworm-slim as base
+# Base node image
+FROM node:20-bookworm-slim AS base
 
-# set for base and all layer that inherit from it
-ENV NODE_ENV production
-
-# Install openssl for Prisma
+# Install openssl for Prisma and other dependencies
 RUN apt-get update && apt-get install -y fuse3 openssl sqlite3 ca-certificates
 
 # Install all node_modules, including dev dependencies
-FROM base as deps
-
-RUN mkdir /myapp/
-WORKDIR /myapp
-
-ADD package.json .npmrc package-lock.json ./
-RUN npm install --include=dev
+FROM base AS development-dependencies-env
+COPY . /app
+WORKDIR /app
+RUN npm ci
 
 # Setup production node_modules
-FROM base as production-deps
-
-RUN mkdir /myapp/
-WORKDIR /myapp/
-
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-ADD package.json .npmrc package-lock.json ./
-RUN npm prune --omit=dev
+FROM base AS production-dependencies-env
+COPY ./package.json package-lock.json /app/
+WORKDIR /app/
+RUN npm ci --omit=dev
 
 # Build the app
-FROM base as build
-
+FROM base AS build-env
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-RUN mkdir /myapp/
-WORKDIR /myapp/
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+WORKDIR /app/
 
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-
-# schema doesn't change much so these will stay cached
-ADD prisma /myapp/prisma
-
+# Generate Prisma client
+ADD prisma /app/prisma
 RUN npx prisma generate
 
-ADD . .
+# Build React Router app
 RUN npm run build
 
-# Finally, build the production image with minimal footprint
+# Final production image
 FROM base
 
 ENV FLY="true"
@@ -54,7 +41,7 @@ ENV DATABASE_FILENAME="sqlite.db"
 ENV DATABASE_PATH="$LITEFS_DIR/$DATABASE_FILENAME"
 ENV DATABASE_URL="file:$DATABASE_PATH"
 ENV CACHE_DATABASE_FILENAME="cache.db"
-ENV CACHE_DATABASE_PATH="/$LITEFS_DIR/$CACHE_DATABASE_FILENAME"
+ENV CACHE_DATABASE_PATH="$LITEFS_DIR/$CACHE_DATABASE_FILENAME"
 ENV INTERNAL_PORT="8080"
 ENV PORT="8080"
 ENV NODE_ENV="production"
@@ -63,23 +50,25 @@ ENV NODE_ENV="production"
 RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli
 RUN echo "#!/bin/sh\nset -x\nsqlite3 \$CACHE_DATABASE_PATH" > /usr/local/bin/cache-database-cli && chmod +x /usr/local/bin/cache-database-cli
 
-RUN mkdir /myapp/
-WORKDIR /myapp/
+WORKDIR /app/
 
-COPY --from=production-deps /myapp/node_modules /myapp/node_modules
-COPY --from=build /myapp/node_modules/prisma /myapp/node_modules/prisma
-COPY --from=build /myapp/node_modules/.prisma /myapp/node_modules/.prisma
-COPY --from=build /myapp/build /myapp/build
-COPY --from=build /myapp/public /myapp/public
-COPY --from=build /myapp/package.json /myapp/package.json
-COPY --from=build /myapp/start.sh /myapp/start.sh
-COPY --from=build /myapp/prisma /myapp/prisma
+# Copy production dependencies and Prisma client
+COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+COPY --from=build-env /app/node_modules/.prisma /app/node_modules/.prisma
 
-# prepare for litefs
+# Copy built application
+COPY --from=build-env /app/build /app/build
+COPY --from=build-env /app/public /app/public
+
+# Copy package files and server
+COPY ./package.json package-lock.json server.js /app/
+COPY --from=build-env /app/prisma /app/prisma
+COPY ./start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Prepare for LiteFS
 COPY --from=flyio/litefs:0.5.11 /usr/local/bin/litefs /usr/local/bin/litefs
 ADD other/litefs.yml /etc/litefs.yml
 RUN mkdir -p /data ${LITEFS_DIR}
-
-ADD . .
 
 CMD ["litefs", "mount"]
