@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 
 app.use(async (req, res, next) => {
 	const { currentInstance, primaryInstance } = await getInstanceInfo()
-	res.set('X-Powered-By', 'Han by bapak2.dev')
+	res.set('X-Powered-By', 'Bapak2dev by Han')
 	res.set('X-Fly-Region', process.env.FLY_REGION ?? 'unknown')
 	res.set('X-Fly-App', process.env.FLY_APP_NAME ?? 'unknown')
 	res.set('X-Fly-Instance', currentInstance)

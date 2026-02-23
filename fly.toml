@@ -1,6 +1,11 @@
 app = "hanihusam-com"
 primary_region = "sin"
 
+[vm]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

@@ -6,7 +6,7 @@
 # Learn more: https://community.fly.io/t/sqlite-not-getting-setup-properly/4386
 
 # Run database migrations
-npx prisma migrate deploy
+./node_modules/.bin/prisma migrate deploy
 
 # Start the app (exec replaces this shell with the node process)
 exec npm start

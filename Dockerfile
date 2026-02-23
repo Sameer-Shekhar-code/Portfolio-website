@@ -8,13 +8,13 @@ RUN apt-get update && apt-get install -y fuse3 openssl sqlite3 ca-certificates
 FROM base AS development-dependencies-env
 COPY . /app
 WORKDIR /app
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Setup production node_modules
 FROM base AS production-dependencies-env
 COPY ./package.json package-lock.json /app/
 WORKDIR /app/
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 # Build the app
 FROM base AS build-env
