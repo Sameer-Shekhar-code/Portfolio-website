@@ -1,21 +1,10 @@
-import { getContentMdxListItems } from '@/utils/mdx.server'
+import { prisma } from '@/utils/db.server'
 
 import { type Route } from './+types/healthcheck'
 
-export async function loader({ request }: Route.LoaderArgs) {
-	const host =
-		request.headers.get('X-Forwarded-Host') ?? request.headers.get('host')
-
+export async function loader({ request: _ }: Route.LoaderArgs) {
 	try {
-		await Promise.all([
-			getContentMdxListItems('blog', { request }),
-			fetch(`${new URL(request.url).protocol}${host}`, {
-				method: 'HEAD',
-				headers: { 'x-healthcheck': 'true' },
-			}).then((r) => {
-				if (!r.ok) return Promise.reject(r)
-			}),
-		])
+		await prisma.$queryRaw`SELECT 1`
 		return new Response('OK')
 	} catch (error: unknown) {
 		console.error('healthcheck ❌', { error })
