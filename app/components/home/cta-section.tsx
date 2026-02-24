@@ -14,8 +14,8 @@ export function CtaSection() {
 				<H2 className="text-light">Interested working with me?</H2>
 
 				<div className="flex gap-2 self-stretch">
-					<AnchorOrLink to="projects">
-						<ButtonOutline>See Projects</ButtonOutline>
+					<AnchorOrLink href="https://cv.hanihusam.com">
+						<ButtonOutline>See Portfolio</ButtonOutline>
 					</AnchorOrLink>
 					<AnchorOrLink href={externalLinks.email}>
 						<Button icon={EnvelopeIcon} iconClassName="text-light">

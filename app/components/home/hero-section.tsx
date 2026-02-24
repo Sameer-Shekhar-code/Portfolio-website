@@ -8,8 +8,6 @@ import { H1, H2, H4, Paragraph } from '@/components/typography'
 import { externalLinks } from '@/external-links'
 import { getImageBuilder, getImgProps } from '@/utils/images'
 
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid'
-
 export function HeroSection() {
 	return (
 		<Grid className="mb-24 h-auto pt-24 lg:min-h-[40rem] xl:mb-0">
@@ -106,14 +104,8 @@ export function HeroSection() {
 					<AnchorOrLink to="links">
 						<Button>Reach Me</Button>
 					</AnchorOrLink>
-					<AnchorOrLink href={externalLinks.cv}>
-						<ButtonText
-							className="group"
-							icon={ArrowDownTrayIcon}
-							iconClassName="duration-500 group-hover:translate-y-1.5"
-						>
-							Download CV
-						</ButtonText>
+					<AnchorOrLink href="https://cv.hanihusam.com">
+						<ButtonText>See CV</ButtonText>
 					</AnchorOrLink>
 				</div>
 			</div>

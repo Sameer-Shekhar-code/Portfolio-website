@@ -10,10 +10,7 @@ import { Bars3Icon, SunIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MoonIcon } from '@heroicons/react/24/solid'
 import { Link, useLocation } from 'react-router'
 
-const LINKS = [
-	{ name: 'Blog', to: '/blog' },
-	{ name: 'Projects', to: '/projects' },
-]
+const LINKS = [{ name: 'Blog', to: '/blog' }]
 
 const MOBILE_LINKS = [{ name: 'Home', to: '/' }, ...LINKS]
 
