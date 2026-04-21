@@ -18,3 +18,18 @@
 - Saved to `docs/before/`
 - Added Umami analytics script to `<head>` in `root.tsx`
 - Added `.claude/` and `.playwright-mcp/` to `.gitignore`
+- Audited all dependencies for unused/replaceable packages
+
+2026-04-21 | Removed `@reach/checkbox`, `rehype-prism-plus`, `uuid`,
+`@types/uuid`, `lodash.throttle`, `@types/lodash.throttle` | native throttle in
+`useScrollSpy.tsx`
+
+2026-04-21 | Prisma/SQLite/LiteFS/`better-sqlite3`/`@epic-web/remember` drop
+deferred to Phase 5 | cache → lru-cache, likes+views → Umami
+
+2026-04-21 | Deleted `ProjectSection` + `ProjectCard` | both unused, no imports
+found
+
+2026-04-21 | Cloudinary stays for blog images | `CloudinaryImg` +
+`ThemedBlogImage` kept as MDX primitives. Revisit if migrating image hosting
+later.

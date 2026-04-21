@@ -1,9 +1,21 @@
 import * as React from 'react'
 
-import throttle from 'lodash.throttle'
-
 // originally based on
 // https://github.com/NotionX/react-notion-x/blob/master/packages/react-notion-x/src/block.tsx#L128-L161
+
+function throttle<T extends (...args: unknown[]) => void>(
+	fn: T,
+	delay: number,
+): T {
+	let last = 0
+	return ((...args) => {
+		const now = Date.now()
+		if (now - last >= delay) {
+			last = now
+			fn(...args)
+		}
+	}) as T
+}
 
 export default function useScrollSpy() {
 	const [activeSection, setActiveSection] = React.useState<string | null>(null)
