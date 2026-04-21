@@ -149,6 +149,11 @@ function App() {
 					nonce={nonce}
 					ssrTheme={Boolean(data.requestInfo.session.theme)}
 				/>
+				<script
+					defer
+					src="https://cloud.umami.is/script.js"
+					data-website-id="1c49a372-515d-46b4-959b-5e29f5727b1f"
+				/>
 			</head>
 			<body>
 				<LayoutRoot>
