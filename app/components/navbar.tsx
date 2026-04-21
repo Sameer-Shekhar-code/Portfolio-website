@@ -110,14 +110,18 @@ function ThemeToggler() {
 function NavLink({
 	to,
 	children,
+	liClassName,
 	...rest
-}: Omit<Parameters<typeof Link>['0'], 'to'> & { to: string }) {
+}: Omit<Parameters<typeof Link>['0'], 'to'> & {
+	to: string
+	liClassName?: string
+}) {
 	const location = useLocation()
 	const isSelected =
 		to === location.pathname || location.pathname.startsWith(`${to}/`)
 
 	return (
-		<li className="flex items-start px-5 py-2">
+		<li className={clsxm('flex items-start px-5 py-2', liClassName)}>
 			<Link
 				className={clsxm(
 					'underlined block whitespace-nowrap text-lg font-medium text-black focus:outline-none dark:text-white',
@@ -148,13 +152,11 @@ export function Navbar() {
 					<img alt="HNH logo" className="h-10 w-10" src={logo} />
 				</NavLink>
 
-				<li className="hidden items-start md:flex">
-					{LINKS.map((link) => (
-						<NavLink key={link.to} to={link.to}>
-							{link.name}
-						</NavLink>
-					))}
-				</li>
+				{LINKS.map((link) => (
+					<NavLink key={link.to} liClassName="hidden md:flex" to={link.to}>
+						{link.name}
+					</NavLink>
+				))}
 
 				<Popover className="relative block md:hidden">
 					{({ open, close }) => (
