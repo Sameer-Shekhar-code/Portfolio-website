@@ -35,11 +35,11 @@ English.
 
 ```
 /                       Home
-/work                   Work index (case studies)
-/work/nota              Case study: Nota
-/work/currinda          Case study: Currinda (pending NDA clearance)
-/work/curious-me        Case study: Curious Me
-/work/this-site         Case study: This site (meta)
+/works                  Work index (case studies)
+/works/nota             Case study: Nota
+/works/currinda         Case study: Currinda (pending NDA clearance)
+/works/curious-me       Case study: Curious Me
+/works/this-site        Case study: This site (meta)
 /process                How I work (AI-assisted design-to-code)
 /about                  About
 /writing                Writing index (3–5 featured → Substack)
@@ -64,12 +64,12 @@ better positioning.
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Goal**          | First impression → push to Work or Process                                                                                                 |
 | **Feeling**       | "This person is serious but human"                                                                                                         |
-| **Primary CTA**   | View my work → `/work`                                                                                                                     |
+| **Primary CTA**   | View my work → `/works`                                                                                                                    |
 | **Secondary CTA** | How I work → `/process`                                                                                                                    |
 | **Key content**   | Name + tagline, 2–3 sentence positioning statement, featured case study cards (2–3), social proof anchor (Upwork, GitHub, Figma Community) |
 | **What to kill**  | Generic "I'm a passionate developer" copy                                                                                                  |
 
-### `/work` — Work Index
+### `/works` — Work Index
 
 |                 |                                                                            |
 | --------------- | -------------------------------------------------------------------------- |
@@ -79,7 +79,7 @@ better positioning.
 | **Key content** | Case study cards: project name, role, year, one-line summary, stack badges |
 | **Note**        | Nota first (most complete). Others follow as they're written.              |
 
-### `/work/:slug` — Case Study
+### `/works/:slug` — Case Study
 
 |                    |                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------- |
@@ -95,7 +95,7 @@ better positioning.
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Goal**                | This is the thesis page. Address the "do you just vibe-code with AI?" skeptic directly.                                                                         |
 | **Feeling**             | "Honest, opinionated, high craft"                                                                                                                               |
-| **Primary CTA**         | See this in action → `/work/this-site`                                                                                                                          |
+| **Primary CTA**         | See this in action → `/works/this-site`                                                                                                                         |
 | **Key content**         | Workflow breakdown: brief → research → Figma → code → review. Where AI enters each step. Where _judgment_ overrides AI. Real examples with prompts + diffs.     |
 | **Counter-positioning** | Show designsnack\_-style AI workflow (ask AI to do everything) vs. your approach (AI for velocity, you for judgment). Don't name them — just show the contrast. |
 | **Note**                | Seed this with real material from this revamp — prompts used, Claude Code diffs, Figma iterations.                                                              |
@@ -138,13 +138,13 @@ First-time visitor (from Twitter / LinkedIn / Upwork / Figma Community)
         ↓
   [sees tagline + featured work]
         ↓
-    Clicks → /work
+    Clicks → /works
         ↓
   [reads Nota case study or another]
         ↓
   Two exits:
     A) Impressed by craft → Contact (email link or simple form)
-    B) Curious about process → /process → /work/this-site
+    B) Curious about process → /process → /works/this-site
         ↓
     A or B → checks GitHub / Figma links as trust signals
         ↓

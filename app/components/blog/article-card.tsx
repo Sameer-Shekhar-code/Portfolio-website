@@ -33,7 +33,7 @@ function ArticleCard({
 			<Link
 				prefetch="intent"
 				className="group peer relative block w-full focus:outline-none"
-				to={`/blog/${slug}`}
+				to={`/writing/${slug}`}
 			>
 				<BlurrableImage
 					key={bannerCloudinaryId}
