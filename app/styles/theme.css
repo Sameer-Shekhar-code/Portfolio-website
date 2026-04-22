@@ -1,0 +1,311 @@
+/*
+ * hanihusam.com — Design System v2
+ * Tailwind v4 @theme + semantic token layer
+ *
+ * SOURCE OF TRUTH: Figma file hanihusam-site-v2
+ * Synced: 2026-04-22
+ *
+ * NAMING CONVENTION:
+ *   Figma uses slash  → color/brand/sunset/500
+ *   CSS uses hyphens  → --color-sunset-500
+ *   They map 1:1, separator is the only difference.
+ *
+ * LAYER RULES:
+ *   @theme       = primitives (Figma: Primitives collection)
+ *   :root        = semantic tokens, light mode (Figma: Tokens → Light)
+ *   [data-theme] = semantic tokens, dark mode  (Figma: Tokens → Dark)
+ *   Components reference semantic tokens ONLY, never primitives directly.
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   PRIMITIVES
+   Figma collection: Primitives
+   These generate Tailwind utilities: bg-sunset-500, text-sky-600, etc.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+	/* Sunset — warm orange, primary brand */
+	--color-sunset-50: #fdebde;
+	--color-sunset-100: #fbd7bd;
+	--color-sunset-200: #f2bb97;
+	--color-sunset-300: #ec9e6a;
+	--color-sunset-400: #e6813e;
+	--color-sunset-500: #d4651b; /* primary CTA */
+	--color-sunset-600: #a75016; /* hover */
+	--color-sunset-700: #8b4212;
+	--color-sunset-800: #72360f;
+	--color-sunset-900: #5e2d0d;
+	--color-sunset-950: #381a07;
+
+	/* Sky — blue-slate, secondary brand */
+	--color-sky-50: #f1f5fa;
+	--color-sky-100: #d9e4f2; /* project card gradient */
+	--color-sky-200: #b3c9e5;
+	--color-sky-300: #87a5d1;
+	--color-sky-400: #7398c7;
+	--color-sky-500: #55749b;
+	--color-sky-600: #45577b; /* title text, secondary button */
+	--color-sky-700: #304258;
+	--color-sky-800: #1f2a38;
+	--color-sky-900: #18212d;
+	--color-sky-950: #0d1219;
+
+	/* Neutral-warm — body text, backgrounds, borders */
+	/* NOTE: neutral/50 = white in Figma (atypical). Kept faithful to source. */
+	--color-neutral-50: #ffffff; /* white — surface/primary light */
+	--color-neutral-100: #f2f3f2; /* surface/secondary light */
+	--color-neutral-200: #e0e3e2; /* border/primary */
+	--color-neutral-300: #cbd1d1; /* border/default */
+	--color-neutral-400: #a2a8ac;
+	--color-neutral-500: #7a8391; /* text/caption, text/overline */
+	--color-neutral-600: #5f6571;
+	--color-neutral-700: #50555f; /* text/label */
+	--color-neutral-800: #434343; /* button ghost text */
+	--color-neutral-900: #46434e; /* text/paragraph (warm dark) */
+	--color-neutral-950: #28262d; /* surface/primary dark */
+
+	/* Intent */
+	--color-danger-400: #f87171;
+	--color-danger-500: #ef4444;
+	--color-success-400: #4ade80;
+	--color-success-500: #22c55e;
+	--color-warning-400: #fbbf24;
+	--color-warning-500: #f59e0b;
+
+	/* ─── Typography ──────────────────────────────────────────────────────── */
+	/* Figma collection: Typography */
+
+	--font-sans: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+
+	/* Font sizes — matches font/size/* variables */
+	--text-xs: 0.75rem; /* 12px — font/size/xs  */
+	--text-sm: 0.875rem; /* 14px — font/size/sm  */
+	--text-base: 1rem; /* 16px — font/size/base */
+	--text-md: 1.125rem; /* 18px — font/size/md  */
+	--text-lg: 1.25rem; /* 20px — font/size/lg  */
+	--text-xl: 1.5rem; /* 24px — font/size/xl  */
+	--text-2xl: 1.875rem; /* 30px — font/size/2xl */
+	--text-3xl: 2.25rem; /* 36px — font/size/3xl */
+	--text-4xl: 3rem; /* 48px — font/size/4xl */
+
+	/* Weights */
+	--font-weight-regular: 400; /* font/weight/regular */
+	--font-weight-medium: 500; /* font/weight/medium  */
+	--font-weight-bold: 700; /* font/weight/bold    */
+	--font-weight-black: 900; /* font/weight/black   */
+
+	/* Line heights — from Figma text styles (pixel values) */
+	--leading-xs: 0.75rem; /* 12px */
+	--leading-base: 1.25rem; /* 20px */
+	--leading-md: 1.575rem; /* 25.2px */
+	--leading-lg: 1.25rem; /* 20px (same as base at this size) */
+	--leading-2xl: 2.34375rem; /* 37.5px */
+	--leading-3xl: 2.8125rem; /* 45px  */
+	--leading-4xl: 3.75rem; /* 60px  */
+
+	/* ─── Spacing — Figma: spacing/* variables (4pt grid, value = step × 4px) */
+
+	--spacing-0-5: 0.125rem; /* 2px  — spacing/0.5 */
+	--spacing-1: 0.25rem; /* 4px  — spacing/1   */
+	--spacing-1-5: 0.375rem; /* 6px  — spacing/1.5 */
+	--spacing-2: 0.5rem; /* 8px  — spacing/2   */
+	--spacing-2-5: 0.625rem; /* 10px — spacing/2.5 */
+	--spacing-3: 0.75rem; /* 12px — spacing/3   */
+	--spacing-4: 1rem; /* 16px — spacing/4   */
+	--spacing-5: 1.25rem; /* 20px — spacing/5   */
+	--spacing-6: 1.5rem; /* 24px — spacing/6   */
+	--spacing-7: 1.75rem; /* 28px — spacing/7   */
+	--spacing-8: 2rem; /* 32px — spacing/8   */
+	--spacing-9: 2.25rem; /* 36px — spacing/9   */
+	--spacing-10: 2.5rem; /* 40px — spacing/10  */
+	--spacing-11: 2.75rem; /* 44px — spacing/11  */
+	--spacing-12: 3rem; /* 48px — spacing/12  */
+	--spacing-16: 4rem; /* 64px — spacing/16  */
+	--spacing-18: 4.5rem; /* 72px — spacing/18  */
+	--spacing-20: 5rem; /* 80px — spacing/20 — section vertical padding */
+	--spacing-32: 8rem; /* 128px — spacing/32 */
+	--spacing-40: 10rem; /* 160px — spacing/40 */
+
+	/* ─── Border radius — Figma: border/radius-* variables */
+
+	--radius-xs: 0.125rem; /* 2px  */
+	--radius-sm: 0.25rem; /* 4px  */
+	--radius-md: 0.375rem; /* 6px  — buttons, dock nav */
+	--radius-lg: 0.5rem; /* 8px  */
+	--radius-xl: 0.75rem; /* 12px — cards */
+	--radius-2xl: 1rem; /* 16px */
+	--radius-full: 9999px; /* 100px in Figma */
+
+	/* ─── Shadow */
+
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-md:
+		0 4px 6px -4px rgb(0 0 0 / 0.1), 0 10px 15px -3px rgb(0 0 0 / 0.1);
+	--shadow-lg:
+		0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+	--shadow-xl:
+		0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+	/* ─── Motion */
+
+	--duration-fast: 150ms;
+	--duration-base: 250ms;
+	--duration-slow: 400ms;
+	--duration-slower: 600ms;
+
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* ─── Layout */
+
+	--container-prose: 45rem; /* 720px  — body copy max-width */
+	--container-site: 72rem; /* 1152px — content column (matches Figma) */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SEMANTIC TOKENS — LIGHT
+   Figma collection: Tokens → Light mode (60:0)
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+	color-scheme: light;
+
+	/* Surface */
+	--surface-primary: var(--color-neutral-50); /* neutral/50 → white   */
+	--surface-secondary: var(--color-neutral-100); /* neutral/100          */
+	--surface-thumbnail: var(--color-sky-100); /* sky/100 → #d9e4f2    */
+
+	/* Text */
+	--text-title-primary: var(--color-sky-600); /* sky/600 → #45577b   */
+	--text-title-secondary: var(
+		--color-sunset-400
+	); /* sunset/400 → orange accent */
+	--text-paragraph: var(--color-neutral-900); /* neutral/900 → #46434e */
+	--text-lead: var(--color-neutral-900); /* same as paragraph   */
+	--text-caption: var(--color-neutral-500); /* neutral/500         */
+	--text-overline: var(--color-neutral-500); /* neutral/500         */
+	--text-label: var(--color-neutral-700); /* neutral/700         */
+	--text-code: var(--color-neutral-800); /* neutral/800         */
+	--text-link: var(--color-sky-600); /* sky/600 (added)     */
+	--text-inverse: var(--color-neutral-50); /* white (added)       */
+
+	/* Border */
+	--border-primary: var(--color-neutral-200); /* #e0e3e2 */
+	--border-default: var(--color-neutral-300); /* #cbd1d1 */
+	--border-focus: var(--color-sunset-500); /* brand focus ring (added) */
+
+	/* Icon */
+	--icon-primary: var(--color-neutral-900);
+	--icon-secondary: var(--color-neutral-400);
+
+	/* Component — Button primary (sunset) */
+	--btn-primary-bg: var(--color-sunset-500);
+	--btn-primary-bg-hover: var(--color-sunset-600);
+	--btn-primary-text: var(--color-neutral-50);
+
+	/* Component — Button secondary (sky) */
+	--btn-secondary-bg: var(--color-sky-600);
+	--btn-secondary-bg-hover: var(--color-sky-700);
+	--btn-secondary-text: var(--color-neutral-50);
+
+	/* Component — Button ghost */
+	--btn-ghost-bg: transparent;
+	--btn-ghost-bg-hover: var(--color-neutral-100);
+	--btn-ghost-text: var(--color-neutral-800);
+	--btn-ghost-text-hover: var(--color-neutral-900);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SEMANTIC TOKENS — DARK
+   Figma collection: Tokens → Dark mode (60:1)
+   NOTE: Dark mode not yet fully designed in Figma.
+         Values below are estimated. Update after dark mode Figma pass.
+   ───────────────────────────────────────────────────────────────────────── */
+
+[data-theme='dark'] {
+	color-scheme: dark;
+
+	/* Surface */
+	--surface-primary: var(--color-neutral-950); /* #28262d   */
+	--surface-secondary: var(--color-neutral-900); /* #46434e — warm dark */
+	--surface-thumbnail: var(--color-sky-800); /* #1f2a38  */
+
+	/* Text */
+	--text-title-primary: var(--color-neutral-100); /* near-white */
+	--text-title-secondary: var(
+		--color-sunset-400
+	); /* same — orange reads well on dark */
+	--text-paragraph: var(--color-neutral-200); /* #e0e3e2    */
+	--text-lead: var(--color-neutral-200);
+	--text-caption: var(--color-neutral-400); /* #a2a8ac    */
+	--text-overline: var(--color-neutral-400);
+	--text-label: var(--color-neutral-300); /* #cbd1d1    */
+	--text-code: var(--color-neutral-200);
+	--text-link: var(--color-sky-400); /* lighter on dark */
+	--text-inverse: var(--color-neutral-950);
+
+	/* Border */
+	--border-primary: var(--color-neutral-800); /* fixed — was wrong in Figma */
+	--border-default: var(--color-neutral-700); /* fixed — was wrong in Figma */
+	--border-focus: var(--color-sunset-400);
+
+	/* Icon */
+	--icon-primary: var(--color-neutral-200);
+	--icon-secondary: var(--color-neutral-600); /* fixed — was wrong in Figma */
+
+	/* Component — Button primary */
+	--btn-primary-bg: var(--color-sunset-500); /* same — brand color */
+	--btn-primary-bg-hover: var(--color-sunset-400);
+	--btn-primary-text: var(--color-neutral-50);
+
+	/* Component — Button secondary */
+	--btn-secondary-bg: var(--color-sky-600);
+	--btn-secondary-bg-hover: var(--color-sky-500);
+	--btn-secondary-text: var(--color-neutral-50);
+
+	/* Component — Button ghost */
+	--btn-ghost-bg: transparent;
+	--btn-ghost-bg-hover: var(--color-neutral-800); /* fixed — was neutral/100 */
+	--btn-ghost-text: var(--color-neutral-50);
+	--btn-ghost-text-hover: var(--color-neutral-200);
+
+	/* Shadows — reduced on dark */
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+	--shadow-md:
+		0 4px 6px -4px rgb(0 0 0 / 0.4), 0 10px 15px -3px rgb(0 0 0 / 0.4);
+	--shadow-lg:
+		0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+	--shadow-xl:
+		0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duration-fast: 0ms;
+		--duration-base: 0ms;
+		--duration-slow: 0ms;
+		--duration-slower: 0ms;
+	}
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BASE
+   ───────────────────────────────────────────────────────────────────────── */
+
+html {
+	font-family: var(--font-sans);
+	background-color: var(--surface-primary);
+	color: var(--text-paragraph);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* View Transitions — native, no library needed */
+@view-transition {
+	navigation: auto;
+}
