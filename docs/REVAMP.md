@@ -47,3 +47,20 @@ stack stays for now, evaluate removal in Phase 5 when Prisma dropped.
 2026-04-21 | MDX stack drop candidate | If blog fully moves to Substack,
 mdx-bundler + rehype/remark + octokit bisa di-drop Phase 5. Confirm saat
 eksekusi.
+
+## 2026-04-22
+
+2026-04-22 | Theme default: light | Warmth-aligned, avoid generic dev dark
+
+2026-04-22 | URL: /works not /work | Plural, consistent with convention
+
+2026-04-22 | Avatar: keep current 3D | No new poses for now, revisit post-launch
+
+2026-04-22 | Phase 1 complete | Strategy doc, sitemap, content map, motion
+philosophy locked
+
+2026-04-22 | Design system v2 tokens synced from Figma | `app/styles/theme.css`
+added — primitives (`@theme`), semantic tokens light/dark (`:root` +
+`[data-theme='dark']`), motion + layout vars. Old `--color-primary-*` /
+`--color-secondary-*` tokens removed from `app.css`. Tailwind v4 migration
+required to activate `@theme` primitives — deferred to Phase 5.

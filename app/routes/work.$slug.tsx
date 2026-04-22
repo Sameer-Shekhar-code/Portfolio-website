@@ -1,6 +1,6 @@
-import { type Route } from './+types/blog.$slug'
+import { type Route } from './+types/work.$slug'
 
 import { redirect } from 'react-router'
 
 export const loader = ({ params }: Route.LoaderArgs) =>
-	redirect(`/writing/${params.slug}`, 301)
+	redirect(`/works/${params.slug}`, 301)
