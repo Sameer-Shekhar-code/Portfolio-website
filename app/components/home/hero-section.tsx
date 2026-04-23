@@ -7,15 +7,27 @@ import { AnchorOrLink } from '@/components/links/anchor-or-link'
 import { H1, H2, H4, Paragraph } from '@/components/typography'
 import { externalLinks } from '@/external-links'
 import { getImageBuilder, getImgProps } from '@/utils/images'
+import { InlineEdit } from '@/components/inline-edit'
 
-export function HeroSection() {
+type HeroSectionProps = {
+	isDeveloper: boolean
+	content: Record<string, string>
+}
+
+export function HeroSection({ isDeveloper, content }: HeroSectionProps) {
 	return (
 		<Grid className="mb-24 h-auto pt-24 lg:min-h-[40rem] xl:mb-0">
 			<div className="hidden gap-16 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:flex lg:flex-col">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col">
 						<H4 className="text-primary-500">Hi, I am</H4>
-						<H1 className="text-secondary-500 dark:text-light">Han</H1>
+						<InlineEdit
+							as={H1}
+							className="text-secondary-500 dark:text-light"
+							value={content['hero_name'] || 'Han'}
+							contentKey="hero_name"
+							isDeveloper={isDeveloper}
+						/>
 					</div>
 
 					<div className="h-2 w-20 bg-primary-500" />
@@ -24,19 +36,19 @@ export function HeroSection() {
 				<div className="flex items-start space-x-6">
 					<IconLink
 						aria-label="Link to Linkedin profile"
-						href={externalLinks.linkedin}
+						href={content['linkedin_url'] || externalLinks.linkedin}
 					>
 						<LinkedinIcon className="text-secondary-500 dark:text-light" />
 					</IconLink>
 					<IconLink
 						aria-label="Link to Github repository"
-						href={externalLinks.github}
+						href={content['github_url'] || externalLinks.github}
 					>
 						<GithubIcon className="text-secondary-500 dark:text-light" />
 					</IconLink>
 					<IconLink
 						aria-label="Link to Dribbble profile"
-						href={externalLinks.dribbble}
+						href={content['dribbble_url'] || externalLinks.dribbble}
 					>
 						<DribbbleIcon className="text-secondary-500 dark:text-light" />
 					</IconLink>
@@ -87,24 +99,29 @@ export function HeroSection() {
 						</span>
 						, I am Han
 					</H4>
-					<H2 className="text-secondary-500 dark:text-light">
-						UI Engineer based on Yogyakarta, Indonesia
-					</H2>
+					<InlineEdit
+						as={H2}
+						className="text-secondary-500 dark:text-light"
+						value={content['hero_role'] || 'UI Engineer based on Yogyakarta, Indonesia'}
+						contentKey="hero_role"
+						isDeveloper={isDeveloper}
+						multiline={true}
+					/>
 				</div>
 
-				<Paragraph>
-					I am a multi-disciplinary Frontend Developer and UI Designer who have
-					experience creating projects in a various industry and have worked
-					with diverse clients from all over the world. I merge technical and
-					design skills to create innovative product with beautiful and
-					functional user experiences.
-				</Paragraph>
+				<InlineEdit
+					as={Paragraph}
+					value={content['hero_bio'] || 'I am a multi-disciplinary Frontend Developer and UI Designer who have experience creating projects in a various industry and have worked with diverse clients from all over the world. I merge technical and design skills to create innovative product with beautiful and functional user experiences.'}
+					contentKey="hero_bio"
+					isDeveloper={isDeveloper}
+					multiline={true}
+				/>
 
 				<div className="flex space-x-2">
-					<AnchorOrLink to="links">
+					<AnchorOrLink href="#contact">
 						<Button>Reach Me</Button>
 					</AnchorOrLink>
-					<AnchorOrLink href="https://cv.hanihusam.com">
+					<AnchorOrLink href={content['cv_url'] || "https://cv.hanihusam.com"}>
 						<ButtonText>See CV</ButtonText>
 					</AnchorOrLink>
 				</div>

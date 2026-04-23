@@ -1,10 +1,21 @@
 import { Grid } from '@/components/grid'
 import { Header } from '@/components/header'
 import { H4, H5, Paragraph } from '@/components/typography'
+import { InlineEdit } from '@/components/inline-edit'
+import { useFetcher } from 'react-router'
+import { ButtonText } from '@/components/button-text'
 
 import { ComputerDesktopIcon, PaintBrushIcon } from '@heroicons/react/24/solid'
+import type { Service } from '@prisma/client'
 
-export function ServicesSection() {
+type ServicesSectionProps = {
+	isDeveloper: boolean
+	services: Service[]
+}
+
+export function ServicesSection({ isDeveloper, services }: ServicesSectionProps) {
+	// For simplicity, we keep the static Header layout from the original design
+	// We'll just let the services array dictate the cards
 	return (
 		<Grid rowGap>
 			<div className="col-span-full row-start-1 flex flex-col space-y-8 lg:col-span-6 lg:col-start-1">
@@ -29,36 +40,25 @@ export function ServicesSection() {
 			</div>
 
 			<div className="col-span-full grid grid-cols-6 gap-8 md:gap-10 lg:col-span-6 lg:col-start-7">
-				<div className="col-span-full lg:col-span-3">
-					<div className="relative h-full w-full pt-10">
-						<ComputerDesktopIcon className="absolute left-8 top-0 z-[1] h-20 w-20 text-secondary-500 dark:text-primary-500" />
-						<div className="relative flex h-full w-full flex-col space-y-2.5 rounded-xl bg-white px-8 pb-8 pt-16 dark:bg-black">
-							<div className="flex flex-col space-y-6 self-stretch">
-								<H4 variant="secondary">Frontend Web Developer</H4>
-								<Paragraph>
-									Details in the code and verbose documentation. I guaranteed
-									free session until you can run my code on your system.
-								</Paragraph>
+				{services.map((service) => (
+					<div key={service.id} className="col-span-full lg:col-span-3">
+						<div className="relative h-full w-full pt-10">
+							<ComputerDesktopIcon className="absolute left-8 top-0 z-[1] h-20 w-20 text-secondary-500 dark:text-primary-500" />
+							<div className="relative flex h-full w-full flex-col space-y-2.5 rounded-xl bg-white px-8 pb-8 pt-16 dark:bg-black">
+								<div className="flex flex-col space-y-6 self-stretch">
+									<H4 variant="secondary">{service.title}</H4>
+									<Paragraph>{service.description}</Paragraph>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				))}
 
-				<div className="col-span-full lg:col-span-3">
-					<div className="relative h-full w-full pt-10">
-						<PaintBrushIcon className="absolute left-8 top-0 z-[1] h-20 w-20 text-secondary-500 dark:text-primary-500" />
-						<div className="relative flex h-full w-full flex-col space-y-2.5 rounded-xl bg-white px-8 pb-8 pt-16 dark:bg-black">
-							<div className="flex flex-col space-y-6 self-stretch">
-								<H4 variant="secondary">User Interface Designer</H4>
-								<Paragraph>
-									I look at every UI design project as a process in solving a
-									problem. I am considering all the aspects until the UI design
-									is “work”.
-								</Paragraph>
-							</div>
-						</div>
+				{services.length === 0 && (
+					<div className="col-span-full">
+						<Paragraph>No services listed.</Paragraph>
 					</div>
-				</div>
+				)}
 			</div>
 		</Grid>
 	)

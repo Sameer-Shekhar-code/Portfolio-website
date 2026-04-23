@@ -32,3 +32,53 @@ model View {
   contentMetaId Int?
   ContentMeta   ContentMeta? @relation(fields: [contentMetaId], references: [id], onDelete: Cascade)
 }
+
+// --- PORTFOLIO CMS MODELS ---
+
+model PortfolioContent {
+  key       String   @id // e.g. 'hero_title', 'about_text'
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  techStack   String   // Comma-separated or JSON
+  githubUrl   String?
+  demoUrl     String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Research {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  link        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Achievement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  icon        String?  // e.g. HeroIcon name
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

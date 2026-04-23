@@ -10,9 +10,16 @@ import { Bars3Icon, SunIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MoonIcon } from '@heroicons/react/24/solid'
 import { Link, useLocation } from 'react-router'
 
-const LINKS = [{ name: 'Writing', to: '/writing' }]
+const LINKS = [
+	{ name: 'About', to: '#about' },
+	{ name: 'Projects', to: '#projects' },
+	{ name: 'Research', to: '#research' },
+	{ name: 'Achievements', to: '#achievements' },
+	{ name: 'Services', to: '#services' },
+	{ name: 'Contact', to: '#contact' },
+]
 
-const MOBILE_LINKS = [{ name: 'Home', to: '/' }, ...LINKS]
+const MOBILE_LINKS = [{ name: 'Home', to: '#home' }, ...LINKS]
 
 const navMenuClasses = (isActive?: boolean) => {
 	return [
@@ -58,17 +65,17 @@ export function NavigationMenuPopover({
 		<Popover.Panel className="fixed bottom-0 left-1/2 top-[104px] z-10 w-full max-w-xl -translate-x-1/2 transform">
 			<nav className="flex h-full w-full flex-1 flex-col overflow-auto bg-light text-black dark:bg-dark dark:text-white">
 				{MOBILE_LINKS.map((link) => {
-					const isActive = link.to === router.pathname
+					const isActive = link.to === router.hash || (link.to === '#home' && !router.hash)
 
 					return (
-						<Link
+						<a
 							key={link.to}
 							className={clsxm(...navMenuClasses(isActive))}
 							onClick={onClickLink}
-							to={link.to}
+							href={link.to}
 						>
 							{link.name}
-						</Link>
+						</a>
 					)
 				})}
 				<div className="noscript-hidden py-9 text-center">
@@ -112,29 +119,28 @@ function NavLink({
 	children,
 	liClassName,
 	...rest
-}: Omit<Parameters<typeof Link>['0'], 'to'> & {
+}: {
 	to: string
+	children: React.ReactNode
 	liClassName?: string
 }) {
 	const location = useLocation()
-	const isSelected =
-		to === location.pathname || location.pathname.startsWith(`${to}/`)
+	const isSelected = to === location.hash || (to === '#home' && !location.hash)
 
 	return (
 		<li className={clsxm('flex items-start px-5 py-2', liClassName)}>
-			<Link
+			<a
 				className={clsxm(
 					'underlined block whitespace-nowrap text-lg font-medium text-black focus:outline-none dark:text-white',
 					{
 						active: isSelected,
 					},
 				)}
-				prefetch="intent"
-				to={to}
+				href={to}
 				{...rest}
 			>
 				{children}
-			</Link>
+			</a>
 		</li>
 	)
 }
@@ -146,10 +152,12 @@ export function Navbar() {
 		<nav className="flex items-start px-6 py-6 md:px-[5vw] lg:py-12">
 			<ul className="mx-auto flex w-full max-w-8xl items-center justify-between">
 				<NavLink
-					to="/"
-					className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-light"
+					to="#home"
+					liClassName="!px-0 !py-0"
 				>
-					<img alt="HNH logo" className="h-10 w-10" src={logo} />
+					<div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-light">
+						<img alt="HNH logo" className="h-10 w-10" src={logo} />
+					</div>
 				</NavLink>
 
 				{LINKS.map((link) => (
